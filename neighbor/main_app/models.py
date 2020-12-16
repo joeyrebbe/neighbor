@@ -18,7 +18,7 @@ class JobPost(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('index', kwargs={'post_id': self.id})
+        return reverse('detail', kwargs={'jobpost_id': self.id})
         # return reverse('index')
 
 

@@ -45,21 +45,28 @@ def about(request):
 
   # A bad POST or a GET request, we'll render signup.html with an empty form 
 
-def posts_index(request):
-  jobPosts = JobPost.objects.all() 
-  return render(request, 'posts/index.html', { 'jobPosts': jobPosts})
 
 # def posts_detail(request, post_id):
 #   post = JobPost.objects.get(id=post_id)
 #   return render(request, 'posts/detail.html', { 'post': post }) 
 
 
-class PostCreate(LoginRequiredMixin, CreateView):
+class JobPostCreate(LoginRequiredMixin, CreateView):
   model = JobPost
   fields = ['description', 'date', 'maxPeople', 'compensation']
+
 
   def form_valid(self, form):
     # Assign the logged in user (self.request.user)
     form.instance.user = self.request.user  # form.instance is the job post. We're overriding the CreateView's form_valid method to assign the logged in user,
     # Let the CreateView do its job as usual
     return super().form_valid(form)
+
+def jobposts_index(request):
+  jobposts = JobPost.objects.all() 
+  return render(request, 'jobposts/index.html', { 'jobposts': jobposts})
+
+
+def jobposts_detail(request, jobpost_id):
+  jobpost = JobPost.objects.get(id=jobpost_id)
+  return render(request, 'jobposts/detail.html', {'jobpost': jobpost})
