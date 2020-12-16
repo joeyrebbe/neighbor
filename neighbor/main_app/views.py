@@ -53,8 +53,6 @@ def posts_index(request):
 #   post = JobPost.objects.get(id=post_id)
 #   return render(request, 'posts/detail.html', { 'post': post }) 
 
-def volunteer_index(request):
-  volunteer = volunteer.objects.all()
 
 class PostCreate(LoginRequiredMixin, CreateView):
   model = JobPost
