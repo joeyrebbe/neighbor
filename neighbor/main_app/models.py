@@ -21,7 +21,21 @@ class JobPost(models.Model):
         return reverse('detail', kwargs={'jobpost_id': self.id})
         # return reverse('index')
 
+class Photo(models.Model):
+    url = models.CharField(max_length=200) #we store url where it hosted (AWS)
+    jobpost = models.ForeignKey(JobPost, on_delete=models.CASCADE) #on_delete - means if we delete this it will delete the chain
+    
+    def __str__(self):
+        #cat_id will referrence cat property above
+        return f"Photo for jobpost_id: {self.jobpost_id} @{self.url}" 
 
 
+class Volonteer(models.Model):
+  name = models.CharField(max_length=50)
+  
+  def __str__(self):
+    return self.name
 
+  def get_absolute_url(self):
+    return reverse('volonteer_detail', kwargs={'pk': self.id})
   

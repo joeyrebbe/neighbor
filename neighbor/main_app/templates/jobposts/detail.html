@@ -15,7 +15,30 @@
     <a href="{% url 'jobposts_update' jobpost.id %}">Edit</a>
     <a href="{% url 'jobposts_delete' jobpost.id %}">Delete</a>
   </div>
+
+      <!-- Insert photo markup below this comment -->
+      {% for photo in jobpost.photo_set.all %}
+        <img class="responsive-img card-panel" src="{{photo.url}}">
+      {% empty %}  <!--Instead of IF Else statement: is this empty?  -->
+        <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+      {% endfor %}
+
+      <!-- Choose file to Upload photo -->
+      <!-- enctype="multipart/form-data" - is sending multiple requests (photo, description. See line below) -->
+      <form action="{% url 'add_photo' jobpost.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+          {% csrf_token %}
+          <!-- type='file' - give us an option to Choose -->
+          <input type="file" name="photo-file"> 
+          <!-- <input type="text" name="description">  - if we want add a description -->
+          <br><br>
+          <input type="submit" class="btn" value="Upload Photo">
+      </form>
 </div>
+
+
+
+
+
 <a href="{% url 'index' %}">Return to all listings</a>
 
 {% endblock %}
