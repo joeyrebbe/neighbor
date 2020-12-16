@@ -64,11 +64,15 @@ def signup(request):
   context = {'form': form, 'error_message': error_message} # we injectin form and error to our html page
   return render(request, 'registration/signup.html', context) 
 
-def job_posts_index(request):
+def posts_index(request):
   jobPosts = JobPost.objects.all() 
-  return render(request, 'job-posts/index.html', { 'jobPosts': jobPosts}) 
+  return render(request, 'posts/index.html', { 'jobPosts': jobPosts})
 
-class JobPostCreate(LoginRequiredMixin, CreateView):
+# def posts_detail(request, post_id):
+#   post = JobPost.objects.get(id=post_id)
+#   return render(request, 'posts/detail.html', { 'post': post }) 
+
+class PostCreate(LoginRequiredMixin, CreateView):
   model = JobPost
   fields = ['description', 'date', 'maxPeople', 'compensation']
 
