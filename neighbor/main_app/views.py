@@ -43,12 +43,7 @@ def home(request):
 def about(request):
     return render(request, 'about.html') #instead of HTTPResponse we can use a template
 
-
   # A bad POST or a GET request, we'll render signup.html with an empty form 
-  form = UserCreationForm()
-  #^ this gives us the Blank Form
-  context = {'form': form, 'error_message': error_message} # we injectin form and error to our html page
-  return render(request, 'registration/signup.html', context) 
 
 def posts_index(request):
   jobPosts = JobPost.objects.all() 
@@ -57,6 +52,7 @@ def posts_index(request):
 # def posts_detail(request, post_id):
 #   post = JobPost.objects.get(id=post_id)
 #   return render(request, 'posts/detail.html', { 'post': post }) 
+
 
 class PostCreate(LoginRequiredMixin, CreateView):
   model = JobPost
