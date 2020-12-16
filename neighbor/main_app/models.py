@@ -37,5 +37,5 @@ class Volonteer(models.Model):
     return self.name
 
   def get_absolute_url(self):
-    return reverse('volonteer_detail', kwargs={'pk': self.id})
+      return reverse('volonteer_detail', kwargs={'pk': self.id})
   
