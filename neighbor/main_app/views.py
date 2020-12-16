@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -45,16 +45,21 @@ def about(request):
 
   # A bad POST or a GET request, we'll render signup.html with an empty form 
 
-def posts_index(request):
-  jobPosts = JobPost.objects.all() 
-  return render(request, 'posts/index.html', { 'jobPosts': jobPosts})
 
 # def posts_detail(request, post_id):
 #   post = JobPost.objects.get(id=post_id)
 #   return render(request, 'posts/detail.html', { 'post': post }) 
 
+class JobPostUpdate(LoginRequiredMixin, UpdateView): 
+  model = JobPost
+  fields = ['description', 'date', 'maxPeople', 'compensation'] 
 
-class PostCreate(LoginRequiredMixin, CreateView):
+class JobPostDelete(LoginRequiredMixin, DeleteView):
+  model = JobPost
+  success_url = '/jobposts/'
+
+
+class JobPostCreate(LoginRequiredMixin, CreateView):
   model = JobPost
   fields = ['description', 'date', 'maxPeople', 'compensation']
 
@@ -63,3 +68,13 @@ class PostCreate(LoginRequiredMixin, CreateView):
     form.instance.user = self.request.user  # form.instance is the job post. We're overriding the CreateView's form_valid method to assign the logged in user,
     # Let the CreateView do its job as usual
     return super().form_valid(form)
+
+
+def jobposts_index(request):
+  jobposts = JobPost.objects.all() 
+  return render(request, 'jobposts/index.html', { 'jobposts': jobposts})
+
+
+def jobposts_detail(request, jobpost_id):
+  jobpost = JobPost.objects.get(id=jobpost_id)
+  return render(request, 'jobposts/detail.html', {'jobpost': jobpost})
