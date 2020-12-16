@@ -4,16 +4,15 @@
 <h1>List of Job Posts</h1>
 
 {% for jobpost in jobposts %}
-<a href="{% url 'detail' jobpost.id %}"></a>
+<a href="{% url 'detail' jobpost.id %}">
 <div class="card">
     <div class="card-content">
         <span class="card-title">{{ jobpost.name }}</span>
-        <p>Description: {{ jobpost.description }}</p>
         <p>Compensation: {{ jobpost.compensation }}</p>
-        <p>Helpers Requested: {{ jobpost.maxPeople }}</p>
         <p>Dates: {{ jobpost.date }}</p>
     </div>
 </div>
+</a>
 {% endfor %}
 
 {% endblock %}
