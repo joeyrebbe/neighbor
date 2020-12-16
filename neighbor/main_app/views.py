@@ -16,7 +16,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
-BUCKET = 'catcollectoraleksei'
+BUCKET = 'jbcatcollector'
 
 def signup(request):
   error_message = ""
@@ -94,7 +94,6 @@ def add_photo(request, jobpost_id):
   photo_file = request.FILES.get('photo-file', None) # if there is no photo-file, the property will be NONE
   if photo_file:
     s3 = boto3.client('s3')
-    print(dir(s3))
     # initiating connection db and aws
     # uuid.uuid4().hex[:6] <- generate an unique "key" for S3 and append photo file name
     # if you want to specify which photo extention you allow, do it here in the key
