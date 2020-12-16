@@ -9,4 +9,5 @@ urlpatterns = [
     # path('posts/<int:post_id>/', views.posts_detail, name='detail'),
     path('posts/create/', views.PostCreate.as_view(), name='posts_create'), #handle GET & POST 
     path('accounts/signup/', views.signup, name='signup'),
+
 ]

@@ -43,20 +43,6 @@ def home(request):
 def about(request):
     return render(request, 'about.html') #instead of HTTPResponse we can use a template
 
-def signup(request):
-  error_message = ""
-  if request.method == "POST":
-    #then we want to create user form object that includes the data from the browser
-    form = UserCreationForm(request.POST) # < - object saved in memory
-    if form.is_valid():
-      # save user to DB
-      user = form.save()
-      # login our user (coming from auth)
-      login(request, user) # <- this will create session cookie with sent back n forth on every request
-      #redirect the user to the index
-      return redirect('index') # index is coming frm name urls.py
-    else: 
-      error_message = 'Invalid sign up - try again'
 
   # A bad POST or a GET request, we'll render signup.html with an empty form 
   form = UserCreationForm()
