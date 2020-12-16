@@ -19,7 +19,7 @@ class JobPost(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        # return reverse('index', kwargs={'job_post_id': self.id})
-        return reverse('index')
+        return reverse('index', kwargs={'post_id': self.id})
+        # return reverse('index')
 
   
