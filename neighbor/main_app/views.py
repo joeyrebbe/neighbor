@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -50,17 +50,25 @@ def about(request):
 #   post = JobPost.objects.get(id=post_id)
 #   return render(request, 'posts/detail.html', { 'post': post }) 
 
+class JobPostUpdate(LoginRequiredMixin, UpdateView): 
+  model = JobPost
+  fields = ['description', 'date', 'maxPeople', 'compensation'] 
+
+class JobPostDelete(LoginRequiredMixin, DeleteView):
+  model = JobPost
+  success_url = '/jobposts/'
+
 
 class JobPostCreate(LoginRequiredMixin, CreateView):
   model = JobPost
   fields = ['description', 'date', 'maxPeople', 'compensation']
-
 
   def form_valid(self, form):
     # Assign the logged in user (self.request.user)
     form.instance.user = self.request.user  # form.instance is the job post. We're overriding the CreateView's form_valid method to assign the logged in user,
     # Let the CreateView do its job as usual
     return super().form_valid(form)
+
 
 def jobposts_index(request):
   jobposts = JobPost.objects.all() 
