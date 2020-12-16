@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>List of Job Posts</h1>
+<h1>Volunteer Requests</h1>
 
 {% for jobpost in jobposts %}
 <a href="{% url 'detail' jobpost.id %}">
