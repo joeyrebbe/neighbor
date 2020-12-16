@@ -12,15 +12,15 @@
 <body>
   <header class="navbar-fixed">
       <nav>
-          <div class="nav-wrapper">
+          <div class="nav-wrapper black">
               <ul>
-                  <li><a href="/" class="left brand-logo"></a><img src="https://i.imgur.com/iD0GL7b.png"></li>
+                  <li><a href="/" class="left brand-logo"></a><img src="https://i.imgur.com/1o626iM.png"></li>
               </ul>
               <ul class="right">
                   <li><a href="{% url 'about' %}">About</a></li>
                   {% if user.is_authenticated %}
-                    <li><a href="{% url 'post' %}">Post</a></li>
-                    <li><a href="{% url 'volunteer' %}">Volunteer</a></li>
+                    <li><a href="{% url 'index' %}">Post</a></li>
+                    <li><a href="{% url 'volunteer_index' %}">Volunteer</a></li>
                     <li><a href="{% url 'profile' %}">Profile</a></li>
                     <li><a href="{% url 'logout' %}">Log Out</a></li>
                   {% else %}
@@ -35,7 +35,7 @@
       {% block content %}
       {% endblock %}
   </main>
-  <footer class="page-footer">
+  <footer class="page-footer black">
      <div class="right">All Rights Reserved, &copy; 2020 Neighbor &nbsp;</div>
   </footer>
 </body>
