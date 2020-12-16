@@ -61,7 +61,7 @@ class JobPostDelete(LoginRequiredMixin, DeleteView):
 
 class JobPostCreate(LoginRequiredMixin, CreateView):
   model = JobPost
-  fields = ['description', 'date', 'maxPeople', 'compensation']
+  fields = ['name', 'description', 'date', 'maxPeople', 'compensation']
 
   def form_valid(self, form):
     # Assign the logged in user (self.request.user)

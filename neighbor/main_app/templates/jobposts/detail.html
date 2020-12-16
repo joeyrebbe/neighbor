@@ -11,6 +11,11 @@
     <p>Helpers Requested: {{ jobpost.maxPeople }}</p>
     <p>Dates: {{ jobpost.date }}</p>
   </div>
+  <div  class="card-action">
+    <a href="{% url 'jobposts_update' jobpost.id %}">Edit</a>
+    <a href="{% url 'jobposts_delete' jobpost.id %}">Delete</a>
+  </div>
 </div>
+<a href="{% url 'index' %}">Return to all listings</a>
 
 {% endblock %}
