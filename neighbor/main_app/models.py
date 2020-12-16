@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 # Create your models here.
-
 class JobPost(models.Model):
     name = models.CharField(max_length = 100)
     description = models.TextField(max_length = 250)
@@ -21,5 +20,8 @@ class JobPost(models.Model):
     def get_absolute_url(self):
         return reverse('index', kwargs={'post_id': self.id})
         # return reverse('index')
+
+
+
 
   
