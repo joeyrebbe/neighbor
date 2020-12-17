@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import JobPost, Photo, JobApplicationMap
+from .models import *
+from .forms import SearchingForm
 
 # Add the two imports below for Login New User
 from django.contrib.auth import login
@@ -51,11 +53,6 @@ def about(request):
 
   # A bad POST or a GET request, we'll render signup.html with an empty form 
 
-
-# def posts_detail(request, post_id):
-#   post = JobPost.objects.get(id=post_id)
-#   return render(request, 'posts/detail.html', { 'post': post }) 
-
 class JobPostUpdate(LoginRequiredMixin, UpdateView): 
   model = JobPost
   fields = ['description', 'date', 'maxPeople', 'compensation'] 
@@ -78,7 +75,19 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
 
 def jobposts_index(request):
   jobposts = JobPost.objects.all()
-  return render(request, 'jobposts/index.html', { 'jobposts': jobposts})
+  form = SearchingForm(request.POST or None)
+  context = {
+    "jobposts": jobposts,
+    "form": form,
+  }
+  
+  if request.method == 'POST':
+    jobposts = JobPost.objects.filter(name__icontains=form['name'].value())
+    context = {
+    "form": form,
+    "jobposts": jobposts,
+    }
+  return render(request, 'jobposts/index.html', context)
 
 def job_application_create(request):
   # print('CHECKPOINT 1 *****')
@@ -105,6 +114,8 @@ def jobposts_add_application(request, jobpost_id):
     'jobpost': jobpost,
     'user': request.user
   })
+
+
 
 def add_photo(request, jobpost_id):
   #<input type="file" name="photo-file"> <-- the client input
