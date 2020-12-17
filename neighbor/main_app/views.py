@@ -78,15 +78,32 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
 
 def jobposts_index(request):
   jobposts = JobPost.objects.all()
-  # job_applications = JobApplicationMap.all()
-
   return render(request, 'jobposts/index.html', { 'jobposts': jobposts})
 
+def job_application_create(request):
+  # print('CHECKPOINT 1 *****')
+  # print(request.body)
+  # print(request.POST['user_id'])
+  # print(request.POST['job_post_id'])
+  # print(request.POST.jobpost_id)
+  user_id = request.POST['user_id']
+  job_post_id = request.POST['job_post_id']
+  JobApplicationMap.objects.create(user_id=user_id, jobPost_id=job_post_id)
+  return redirect('index')
 
 def jobposts_detail(request, jobpost_id):
   jobpost = JobPost.objects.get(id=jobpost_id)
+  # job_applicant = JobPost.objects.get(id=user_id)
+  print(jobpost.user.id)
+ 
   return render(request, 'jobposts/detail.html', {'jobpost': jobpost})
 
+def jobposts_add_application(request, jobpost_id):
+  jobpost = JobPost.objects.get(id=jobpost_id)
+  return render(request, 'jobposts/apply.html', {
+    'jobpost': jobpost,
+    'user': request.user
+  })
 
 def add_photo(request, jobpost_id):
   #<input type="file" name="photo-file"> <-- the client input
@@ -113,20 +130,4 @@ def add_photo(request, jobpost_id):
       print('An error occurred uploading file to S3')
   return redirect('detail', jobpost_id=jobpost_id)
 
-def jobposts_add_application(request, jobpost_id):
-  jobpost = JobPost.objects.get(id=jobpost_id)
-  return render(request, 'jobposts/apply.html', {
-    'jobpost': jobpost,
-    'user': request.user
-  })
 
-def job_application_create(request):
-  # print('CHECKPOINT 1 *****')
-  # print(request.body)
-  # print(request.POST['user_id'])
-  # print(request.POST['job_post_id'])
-  # print(request.POST.jobpost_id)
-  user_id = request.POST['user_id']
-  job_post_id = request.POST['job_post_id']
-  # JobApplicationMap.objects.create(user_id=user_id, jobPost_id=job_post_id)
-  return redirect('index')

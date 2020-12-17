@@ -10,7 +10,8 @@
             <th>Request</th>
             <th>Compensation</th>
             <th>Dates</th>
-            <th>Volunteers</th>
+            <th>Volunteer requested</th>
+            <th>Posted by</th>
             <th></th>
         </tr>
     </thead>
@@ -22,6 +23,7 @@
             <td>{{ jobpost.date }}</td>
             <td>{{ jobpost.maxPeople }} </td>
             <td><a href="{% url 'jobposts_add_application' jobpost.id %}">Apply</a></td>
+            <td>{{ jobpost.user }}</td>
         </tr>
         {% endfor %}
     </tbody>
