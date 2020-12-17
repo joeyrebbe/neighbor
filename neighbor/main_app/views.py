@@ -95,7 +95,8 @@ def jobposts_detail(request, jobpost_id):
   jobpost = JobPost.objects.get(id=jobpost_id)
   # job_applicant = JobPost.objects.get(id=user_id)
   print(jobpost.user.id)
- 
+  # volonteer = volonteer.JobApplicationMap_set.all
+  print()
   return render(request, 'jobposts/detail.html', {'jobpost': jobpost})
 
 def jobposts_add_application(request, jobpost_id):
