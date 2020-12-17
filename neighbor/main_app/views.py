@@ -78,8 +78,8 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
 
 def jobposts_index(request):
   jobposts = JobPost.objects.all()
-  job_applications = JobApplicationMap.all()
-  
+  # job_applications = JobApplicationMap.all()
+
   return render(request, 'jobposts/index.html', { 'jobposts': jobposts})
 
 
@@ -128,5 +128,5 @@ def job_application_create(request):
   # print(request.POST.jobpost_id)
   user_id = request.POST['user_id']
   job_post_id = request.POST['job_post_id']
-  JobApplicationMap.objects.create(user_id=user_id, jobPost_id=job_post_id)
+  # JobApplicationMap.objects.create(user_id=user_id, jobPost_id=job_post_id)
   return redirect('index')
