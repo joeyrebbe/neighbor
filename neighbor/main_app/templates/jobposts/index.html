@@ -3,7 +3,7 @@
 
 <h1>Volunteer Requests</h1>
 
-{% for jobpost in jobposts %}
+
 <table>
     <thead>
         <tr>
@@ -11,16 +11,22 @@
             <th>Compensation</th>
             <th>Dates</th>
             <th>Volunteers</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        <td><a href="{% url 'detail' jobpost.id %}" class="teal-text">{{ jobpost.name }}</a></td>
-        <td>{{ jobpost.compensation }}</td>
-        <td>{{ jobpost.date }}</td>
-        <td>{{ jobpost.maxPeople }} </td>
+        {% for jobpost in jobposts %}
+        <tr>
+            <td><a href="{% url 'detail' jobpost.id %}" class="teal-text">{{ jobpost.name }}</a></td>
+            <td>{{ jobpost.compensation }}</td>
+            <td>{{ jobpost.date }}</td>
+            <td>{{ jobpost.maxPeople }} </td>
+            <td><a href="{% url 'jobposts_add_application' jobpost.id %}">Apply</a></td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
 
-{% endfor %}
+
 
 {% endblock %}

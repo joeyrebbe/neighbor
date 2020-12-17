@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import JobPost, Photo
+from .models import JobPost, Photo, JobApplicationMap
 
 # Add the two imports below for Login New User
 from django.contrib.auth import login
@@ -16,7 +16,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
-BUCKET = 'catcollectoraleksei'
+BUCKET = 'jbcatcollector'
 
 def signup(request):
   error_message = ""
@@ -77,14 +77,14 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
 
 
 def jobposts_index(request):
-  jobposts = JobPost.objects.all() 
+  jobposts = JobPost.objects.all()
+  job_applications = JobApplicationMap.all()
+  
   return render(request, 'jobposts/index.html', { 'jobposts': jobposts})
 
 
 def jobposts_detail(request, jobpost_id):
   jobpost = JobPost.objects.get(id=jobpost_id)
-  print('*********')
-  print(jobpost)
   return render(request, 'jobposts/detail.html', {'jobpost': jobpost})
 
 
@@ -94,7 +94,6 @@ def add_photo(request, jobpost_id):
   photo_file = request.FILES.get('photo-file', None) # if there is no photo-file, the property will be NONE
   if photo_file:
     s3 = boto3.client('s3')
-    print(dir(s3))
     # initiating connection db and aws
     # uuid.uuid4().hex[:6] <- generate an unique "key" for S3 and append photo file name
     # if you want to specify which photo extention you allow, do it here in the key
@@ -113,3 +112,21 @@ def add_photo(request, jobpost_id):
     except:
       print('An error occurred uploading file to S3')
   return redirect('detail', jobpost_id=jobpost_id)
+
+def jobposts_add_application(request, jobpost_id):
+  jobpost = JobPost.objects.get(id=jobpost_id)
+  return render(request, 'jobposts/apply.html', {
+    'jobpost': jobpost,
+    'user': request.user
+  })
+
+def job_application_create(request):
+  # print('CHECKPOINT 1 *****')
+  # print(request.body)
+  # print(request.POST['user_id'])
+  # print(request.POST['job_post_id'])
+  # print(request.POST.jobpost_id)
+  user_id = request.POST['user_id']
+  job_post_id = request.POST['job_post_id']
+  JobApplicationMap.objects.create(user_id=user_id, jobPost_id=job_post_id)
+  return redirect('index')
