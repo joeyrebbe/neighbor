@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import JobPost, Photo, JobApplicationMap
+from .models import JobPost, Photo, JobApplicationMap, Skill, Profile
 from .models import *
 from .forms import SearchingForm
 from django.http import HttpResponse
@@ -25,7 +25,7 @@ import traceback
 import sys 
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
-BUCKET = 'jbcatcollector'
+BUCKET = 'catcollectoraleksei'
 
 def signup(request):
   error_message = ""
@@ -83,6 +83,39 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
     form.instance.user = self.request.user  # form.instance is the job post. We're overriding the CreateView's form_valid method to assign the logged in user,
     # Let the CreateView do its job as usual
     return super().form_valid(form)
+
+
+def profile(request):
+  print('******************')
+  # skills = Skill.objects.all()
+  skills = Cat.objects.filter(user=request.user)
+  print(skills)
+  return render(request, 'profile/index.html', { 'skills': skills})
+
+
+# def profile_detail(request, profile_id):
+#   #find the cat that has the id of cat_id
+#   # it's better use Cat.objects.get rather then .filter
+#   profile = Profile.objects.get(id=user_id)
+#   #find toys that cat doesn't have and exclude them
+#   # toys_cat_doesnt_have = Toy.objects.exclude(id__in = cat.toys.all().values_list('id'))
+#   skills_profile_doesnt_have = Skill.objects.exlude(id__in = profile.skills.all().values_list('id'))
+#   feeding_form = FeedingForm() #we need to instintate our form FeedingForm to inject (render) our template
+#   return render(request, 'cats/detail.html', { 
+#     'cat': cat, 'feeding_form': feeding_form,
+#     # Add the toys to be displayed
+#     'toys': toys_cat_doesnt_have
+#      })
+
+
+def assoc_skill(request, profile_id, skill_id):
+  print('*****Checkpoint 2')
+  # Note that you can pass a toy's id instead of the whole object
+  Profile.objects.get(id=profile_id).skills.add(skill_id)
+  # these 2 lines below is the same that line ^^^^
+  # cat = Cat.objects(id=cat_id)
+  # cat.toys.add(toy_id)
+  return redirect('profile_index', profile_id=profile_id)
 
 
 def jobposts_index(request):
