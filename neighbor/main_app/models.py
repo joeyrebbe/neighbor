@@ -79,3 +79,10 @@ class JobApplicationMap(models.Model):
             ),
         ]
 
+class Skill(models.Model):
+    value = models.CharField(max_length = 100)
+    description = models.TextField(max_length = 250)
+       
+    def __str__(self):
+        return self.value
+
