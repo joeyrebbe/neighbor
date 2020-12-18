@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import JobPost, Photo, JobApplicationMap, Skill, Profile
+from .models import JobPost, Photo, JobApplicationMap, Skill, Profile, ZipCode
 from .models import *
 from .forms import SearchingForm
 from django.http import HttpResponse
@@ -85,12 +85,34 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
     return super().form_valid(form)
 
 
-def profile(request):
-  print('******************')
-  # skills = Skill.objects.all()
-  skills = Skill.objects.filter(user=request.user)
-  print(skills)
-  return render(request, 'profile/index.html', { 'skills': skills})
+def profile(request, profile_id):
+  print('******************Checkpoint 1')
+  profile = Profile.objects.get(id=profile_id)
+  skills = Skill.objects.all()
+  # print(skills)
+  # zipcode = ZipCode.objects.all()
+  # zipcode = ZipCode.objects.exclude(id__in = profile.zipcode.all().values_list('id'))
+  
+  # print(zipcode)
+  # zipcode = ZipCode.objects.get(zipcode_id=zipcode_id)
+  print('******************Checkpoint 2')
+  # skills = Skill.objects.filter(user=request.user)
+  return render(request, 'profile/detail.html', {'profile': profile, 'skills': skills })
+
+def assoc_zip(request, profile_id, zipcode_id):
+  print("*************Checkpoint 3")
+  Profile.objects.get(id=profile_id).zipcode.add(zipcode_id)
+  return redirect('profile_index', profile_id=profile_id, zipcode_id=zipcode_id)
+
+
+
+  # # instantiate FeedingForm to be rendered in the template
+  # feeding_form = FeedingForm()
+  # return render(request, 'cats/detail.html', {
+  #   # pass the cat and feeding_form as context
+  #   'cat': cat, 'feeding_form': feeding_form, 'toys': toys_cat_doesnt_have
+  # })
+
 
 
 # def profile_detail(request, profile_id):

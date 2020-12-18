@@ -40,20 +40,27 @@ class Photo(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length = 100)
     description = models.TextField(max_length = 250)
-        
+            
     def __str__(self):
         return self.name
+    
+class ZipCode(models.Model):
+    zipcode = models.CharField(max_length=5)
+
+    def __str__(self):
+        return self.zipcode
 
 class Profile(models.Model):
   name = models.CharField(max_length=50)
   skills = models.ManyToManyField(Skill)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
+  zipcode = models.ManyToManyField(ZipCode)
   
   def __str__(self):
-      return self.user_id
+      return self.name
 
-#   def get_absolute_url(self):
-#       return reverse('profile_index', kwargs={'pk': self.id})
+  def get_absolute_url(self):
+      return reverse('profile_detail', kwargs={'profile_id': self.id})
 
 class JobApplicationMap(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
