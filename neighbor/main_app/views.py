@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import JobPost, Photo, JobApplicationMap
 from .models import *
 from .forms import SearchingForm
+from django.http import HttpResponse
 
 # Add the two imports below for Login New User
 from django.contrib.auth import login
@@ -16,6 +17,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 import uuid
 import boto3
+
+#these lines below for HandleErrors Functions
+import json
+import traceback 
+import sys 
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'jbcatcollector'
@@ -75,6 +81,7 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
 
 def jobposts_index(request):
   jobposts = JobPost.objects.all()
+
   form = SearchingForm(request.POST or None)
   context = {
     "jobposts": jobposts,
@@ -95,17 +102,25 @@ def job_application_create(request):
   # print(request.POST['user_id'])
   # print(request.POST['job_post_id'])
   # print(request.POST.jobpost_id)
-  user_id = request.POST['user_id']
-  job_post_id = request.POST['job_post_id']
-  JobApplicationMap.objects.create(user_id=user_id, jobPost_id=job_post_id)
-  return redirect('index')
+  try:
+    user_id = request.POST['user_id']
+    job_post_id = request.POST['job_post_id']
+    JobApplicationMap.objects.create(user_id=user_id, jobPost_id=job_post_id)
+    return redirect('index')
+  except Exception as err:
+    print(err)
+    return HttpResponse(err, status=500)
+
+  
 
 def jobposts_detail(request, jobpost_id):
   jobpost = JobPost.objects.get(id=jobpost_id)
+ 
+  print('**************')
+  print(jobpost)
+
   # job_applicant = JobPost.objects.get(id=user_id)
-  print(jobpost.user.id)
   # volonteer = volonteer.JobApplicationMap_set.all
-  print()
   return render(request, 'jobposts/detail.html', {'jobpost': jobpost})
 
 def jobposts_add_application(request, jobpost_id):

@@ -30,15 +30,33 @@ class Photo(models.Model):
         return f"Photo for jobpost_id: {self.jobpost_id} @{self.url}" 
 
 
-class Volonteer(models.Model):
-  name = models.CharField(max_length=50)
+# class Profile(models.Model):
+#   name = models.CharField(max_length=50)
   
-  def __str__(self):
-      return self.name
+#   def __str__(self):
+#       return self.name
 
-  def get_absolute_url(self):
-      return reverse('volonteer_detail', kwargs={'pk': self.id})
+#   def get_absolute_url(self):
+#       return reverse('volonteer_detail', kwargs={'pk': self.id})
 
 class JobApplicationMap(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     jobPost = models.ForeignKey(JobPost, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"user_id: {self.user_id}; jobPost_id: {self.jobPost_id}" 
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user_id', 'jobPost_id'],
+                name='useri_id_job_post_id_unique',
+            ),
+        ]
+
+class Skill(models.Model):
+    value = models.CharField(max_length = 100)
+    description = models.TextField(max_length = 250)
+       
+    def __str__(self):
+        return self.value
