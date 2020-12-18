@@ -49,7 +49,3 @@ class Volonteer(models.Model):
 class JobApplicationMap(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     jobPost = models.ForeignKey(JobPost, on_delete=models.CASCADE)
-
-
-
-
