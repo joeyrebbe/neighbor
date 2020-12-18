@@ -88,7 +88,7 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
 def profile(request):
   print('******************')
   # skills = Skill.objects.all()
-  skills = Cat.objects.filter(user=request.user)
+  skills = Skill.objects.filter(user=request.user)
   print(skills)
   return render(request, 'profile/index.html', { 'skills': skills})
 
