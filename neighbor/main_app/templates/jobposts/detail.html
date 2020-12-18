@@ -12,13 +12,18 @@
     <div class="teal-text center-align">No Photos Uploaded</div>
   {% endfor %}
 </div>
+<div class="row">
+  <div class="col s6">
   <div class="card-content">
-    <span class="card-title">{{ jobpost.name }}</span>
+    <span class="card-title teal-text">{{ jobpost.name }}</span>
     <p>Description: {{ jobpost.description }}</p>
     <p>Compensation: {{ jobpost.compensation }}</p>
     <p>Helpers Requested: {{ jobpost.maxPeople }}</p>
     <p>Date: {{ jobpost.date }}</p>
     <p>Posted by: {{ jobpost.user }}</p>
+  </div>
+  </div>
+  <div class="col s6">
     <!-- <p>Applicant: {{ volonteer.JobApplicationMap_set.all }}</p> -->
     <table>
       <thead>
@@ -27,7 +32,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for volonteer in jobpost.jobapplicationmap_set.all %}
+      {% for volonteer in jobpost.jobapplicationmap_set.all %}
     <tr>
       <td>{{volonteer.user}}</td>
       <!-- <td>{{feeding.get_meal_display}}</td> -->
@@ -36,23 +41,30 @@
   {% endfor %}
   </table>
   </div>
+</div>
   <div  class="card-action">
-    <!-- Choose file to Upload photo -->
-    <!-- enctype="multipart/form-data" - is sending multiple requests (photo, description. See line below) -->
-    <form action="{% url 'add_photo' jobpost.id %}" enctype="multipart/form-data" method="POST">
-      {% csrf_token %}
-      <!-- type='file' - give us an option to Choose -->
-      <input type="file" name="photo-file"> 
-      <!-- <input type="text" name="description">  - if we want add a description -->
-      <br><br>
-      <input type="submit" class="btn" value="Upload Photo">
-    </form>
-    <a href="{% url 'jobposts_update' jobpost.id %}">Edit post</a>
-    <a href="{% url 'jobposts_delete' jobpost.id %}">Delete post</a>
+    <div class="row">
+      <div class="col s4">
+        <a href="{% url 'jobposts_update' jobpost.id %}">Edit post</a>
+        <a href="{% url 'jobposts_delete' jobpost.id %}">Delete post</a><br><br>
+        <a href="{% url 'index' %}">Return to all listings</a>
+      </div>
+      <div class="col s4 right">
+      <!-- Choose file to Upload photo -->
+      <!-- enctype="multipart/form-data" - is sending multiple requests (photo, description. See line below) -->
+      <form action="{% url 'add_photo' jobpost.id %}" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <!-- type='file' - give us an option to Choose -->
+        <input type="file" name="photo-file"> 
+        <!-- <input type="text" name="description">  - if we want add a description -->
+        <br><br>
+        <input type="submit" class="btn" value="Upload Photo">
+      </form>
+      </div>
   </div>
+</div>
 
 </div>
-<a href="{% url 'index' %}" class="btn">Return to all listings</a>
 
 
 {% endblock %}
