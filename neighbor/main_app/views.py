@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import JobPost, Photo, JobApplicationMap, CustomUser
+from .models import JobPost, Photo, JobApplicationMap
 from .models import *
 from .forms import SearchingForm
 
@@ -54,10 +54,10 @@ def about(request):
 
   # A bad POST or a GET request, we'll render signup.html with an empty form 
 
-class CustomUserCreationForm(UserCreationForm):
-  class Meta(UserCreationForm.Meta):
-    model = CustomUser
-    fields = UserCreationForm.Meta.fields + ('zip_code',)
+# class CustomUserCreationForm(UserCreationForm):
+#   class Meta(UserCreationForm.Meta):
+#     model = CustomUser
+#     fields = UserCreationForm.Meta.fields + ('zip_code',)
 
 class JobPostUpdate(LoginRequiredMixin, UpdateView): 
   model = JobPost
