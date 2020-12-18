@@ -7,7 +7,7 @@ from django.urls import reverse
 
 # Create your models here.
 
-class Profile(models.Model):
+class CustomUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     zip_code = models.CharField(max_length = 5) # if not working, try pip install django-localflavor
     # if pip install, change params to (_("zip code"), max_length=5, default=43701)
@@ -49,7 +49,6 @@ class Volonteer(models.Model):
 class JobApplicationMap(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     jobPost = models.ForeignKey(JobPost, on_delete=models.CASCADE)
-
 
 
 

@@ -2,17 +2,17 @@ from django.contrib import admin
 
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import CustomUser
 
 # Register your models here.
 
-class ProfileInline(admin.StackedInline):
-    model = Profile
+class CustomUserInline(admin.StackedInline):
+    model = CustomUser
     can_delete = True
-    verbose_name_plural = 'profile'
+    verbose_name_plural = 'custom user'
 
 class UserAdmin(BaseUserAdmin):
-    inlines = (ProfileInline,)
+    inlines = (CustomUserInline,)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

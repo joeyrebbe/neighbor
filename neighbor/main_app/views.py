@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import JobPost, Photo, JobApplicationMap
+from .models import JobPost, Photo, JobApplicationMap, CustomUser
 from .models import *
 from .forms import SearchingForm
 
 # Add the two imports below for Login New User
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+
 
 # Create your views here.
 
@@ -52,6 +53,11 @@ def about(request):
     return render(request, 'about.html') #instead of HTTPResponse we can use a template
 
   # A bad POST or a GET request, we'll render signup.html with an empty form 
+
+class CustomUserCreationForm(UserCreationForm):
+  class Meta(UserCreationForm.Meta):
+    model = CustomUser
+    fields = UserCreationForm.Meta.fields + ('zip_code',)
 
 class JobPostUpdate(LoginRequiredMixin, UpdateView): 
   model = JobPost
