@@ -1,10 +1,15 @@
 from django.contrib import admin
+from .models import JobPost, JobApplicationMap, Skill, Photo            
 
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import User
+# from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+# from django.contrib.auth.models import User
 # from .models import CustomUser
 
 # Register your models here.
+admin.site.register(JobPost)
+admin.site.register(JobApplicationMap)
+admin.site.register(Photo)
+admin.site.register(Skill)
 
 # class CustomUserInline(admin.StackedInline):
 #     model = CustomUser
