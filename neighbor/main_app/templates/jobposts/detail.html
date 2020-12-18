@@ -21,6 +21,18 @@
     <p>Helpers Requested: {{ jobpost.maxPeople }}</p>
     <p>Date: {{ jobpost.date }}</p>
     <p>Posted by: {{ jobpost.user }}</p>
+    <form action="{% url 'job_application_create' %}" method="POST">
+      {% csrf_token %}
+      <div>
+          <button type="submit" class="btn">Apply</a>
+          </div>
+          <div style="visibility:hidden">
+              <input name="user_id" id="user-id" value="{{user.id}}">
+          </div>
+          <div style="visibility:hidden">
+              <input name="job_post_id" id="job-post-id" value="{{jobpost.id}}">
+          </div>
+  </form>
   </div>
   </div>
   <div class="col s6">
