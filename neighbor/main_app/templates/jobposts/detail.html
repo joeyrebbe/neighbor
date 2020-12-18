@@ -20,12 +20,21 @@
     <p>Date: {{ jobpost.date }}</p>
     <p>Posted by: {{ jobpost.user }}</p>
     <!-- <p>Applicant: {{ volonteer.JobApplicationMap_set.all }}</p> -->
-    {% for volonteer in volonterr.jobaaplfeeding_set.all %}
+    <table>
+      <thead>
+        <tr>
+          <th>Volunteers applied:</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for volonteer in jobpost.jobapplicationmap_set.all %}
     <tr>
-      <td>{{feeding.date}}</td>
-      <td>{{feeding.get_meal_display}}</td>
+      <td>{{volonteer.user}}</td>
+      <!-- <td>{{feeding.get_meal_display}}</td> -->
     </tr>
+    </tbody>
   {% endfor %}
+  </table>
   </div>
   <div  class="card-action">
     <!-- Choose file to Upload photo -->
