@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
+
 # Create your views here.
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -58,6 +59,11 @@ def about(request):
     return render(request, 'about.html') #instead of HTTPResponse we can use a template
 
   # A bad POST or a GET request, we'll render signup.html with an empty form 
+
+# class CustomUserCreationForm(UserCreationForm):
+#   class Meta(UserCreationForm.Meta):
+#     model = CustomUser
+#     fields = UserCreationForm.Meta.fields + ('zip_code',)
 
 class JobPostUpdate(LoginRequiredMixin, UpdateView): 
   model = JobPost
