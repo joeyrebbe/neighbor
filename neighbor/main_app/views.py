@@ -84,6 +84,13 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
     # Let the CreateView do its job as usual
     return super().form_valid(form)
 
+class ProfileCreate(LoginRequiredMixin, CreateView):
+  model = Profile
+  fields = ['name', 'skills', 'zipcode']
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
 
 def profile(request, profile_id):
   print('******************Checkpoint 1')
