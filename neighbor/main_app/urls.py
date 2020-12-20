@@ -14,6 +14,6 @@ urlpatterns = [
     path('accounts/signup/', views.signup, name='signup'),
     path('jobposts/<int:jobpost_id>/add-application/', views.jobposts_add_application, name='jobposts_add_application'),
     path('job-application/', views.job_application_create, name='job_application_create'),
-    path('profile/create/', views.ProfileCreate.as_view(), name='profile_create'),
-    path('profile/<int:profile_id>/', views.profile, name='profile_detail')
+    path('profile/<int:profile_id>/', views.profile, name='profile_detail'),
+    path('profile/<int:pk>/update/', views.ProfileUpdate.as_view(), name='profile_update')
 ]

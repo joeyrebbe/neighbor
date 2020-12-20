@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import JobPost, JobApplicationMap, Photo, Skill, Profile, ZipCode         
+from .models import JobPost, JobApplicationMap, Photo, Skill, Profile         
 
 # from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 # from django.contrib.auth.models import User
@@ -11,7 +11,6 @@ admin.site.register(JobApplicationMap)
 admin.site.register(Photo)
 admin.site.register(Skill)
 admin.site.register(Profile)
-admin.site.register(ZipCode)
 
 # class CustomUserInline(admin.StackedInline):
 #     model = CustomUser
