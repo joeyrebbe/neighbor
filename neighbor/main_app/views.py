@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import JobPost, Photo, JobApplicationMap, Skill, Profile
+from .models import JobPost, Photo, JobApplicationMap, Profile
 from .models import *
-from .forms import SearchingForm
+from .forms import SearchingForm, SkillForm
 from django.http import HttpResponse
 
 # Add the two imports below for Login New User
@@ -84,21 +84,28 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
   fields = ['name', 'bio', 'zipcode']
 
 def profile(request, profile_id):
-  print('******************Checkpoint 1')
   profile = Profile.objects.get(id=profile_id)
-  skills = Skill.objects.all()
-  print('******************Checkpoint 2')
   # skills = Skill.objects.filter(user=request.user)
-  return render(request, 'profile/detail.html', {'profile': profile, 'skills': skills })
+  return render(request, 'profile/detail.html', {'profile': profile})
 
-def assoc_skill(request, profile_id, skill_id):
-  print('*****Checkpoint 2')
-  # Note that you can pass a toy's id instead of the whole object
-  Profile.objects.get(id=profile_id).skills.add(skill_id)
-  # these 2 lines below is the same that line ^^^^
-  # cat = Cat.objects(id=cat_id)
-  # cat.toys.add(toy_id)
-  return redirect('profile_index', profile_id=profile_id)
+# def assoc_skill(request, profile_id, skill_id):
+
+#   Profile.objects.get(id=profile_id).skills.add(skill_id)
+  
+#   return redirect('profile_index', profile_id=profile_id)
+
+
+def add_skill(request, profile_id):
+
+  form = SkillForm(request.POST)
+
+  if form.is_valid():
+
+    new_skill = form.save(commit=False)
+    new_skill.profile_id = profile_id
+    new_skill.save()
+
+  return redirect('profile_detail', profile_id=profile_id)
 
 
 def jobposts_index(request):
