@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import JobPost, Photo, JobApplicationMap, Skill, Profile, ZipCode
+from .models import JobPost, Photo, JobApplicationMap, Skill, Profile
 from .models import *
 from .forms import SearchingForm
 from django.http import HttpResponse
@@ -60,11 +60,6 @@ def about(request):
 
   # A bad POST or a GET request, we'll render signup.html with an empty form 
 
-# class CustomUserCreationForm(UserCreationForm):
-#   class Meta(UserCreationForm.Meta):
-#     model = CustomUser
-#     fields = UserCreationForm.Meta.fields + ('zip_code',)
-
 class JobPostUpdate(LoginRequiredMixin, UpdateView): 
   model = JobPost
   fields = ['description', 'date', 'maxPeople', 'compensation'] 
@@ -84,58 +79,17 @@ class JobPostCreate(LoginRequiredMixin, CreateView):
     # Let the CreateView do its job as usual
     return super().form_valid(form)
 
-class ProfileCreate(LoginRequiredMixin, CreateView):
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
   model = Profile
-  fields = ['name', 'skills', 'zipcode']
-  def form_valid(self, form):
-    form.instance.user = self.request.user
-    return super().form_valid(form)
-
+  fields = ['name', 'bio', 'zipcode']
 
 def profile(request, profile_id):
   print('******************Checkpoint 1')
   profile = Profile.objects.get(id=profile_id)
   skills = Skill.objects.all()
-  # print(skills)
-  # zipcode = ZipCode.objects.all()
-  # zipcode = ZipCode.objects.exclude(id__in = profile.zipcode.all().values_list('id'))
-  
-  # print(zipcode)
-  # zipcode = ZipCode.objects.get(zipcode_id=zipcode_id)
   print('******************Checkpoint 2')
   # skills = Skill.objects.filter(user=request.user)
   return render(request, 'profile/detail.html', {'profile': profile, 'skills': skills })
-
-def assoc_zip(request, profile_id, zipcode_id):
-  print("*************Checkpoint 3")
-  Profile.objects.get(id=profile_id).zipcode.add(zipcode_id)
-  return redirect('profile_index', profile_id=profile_id, zipcode_id=zipcode_id)
-
-
-
-  # # instantiate FeedingForm to be rendered in the template
-  # feeding_form = FeedingForm()
-  # return render(request, 'cats/detail.html', {
-  #   # pass the cat and feeding_form as context
-  #   'cat': cat, 'feeding_form': feeding_form, 'toys': toys_cat_doesnt_have
-  # })
-
-
-
-# def profile_detail(request, profile_id):
-#   #find the cat that has the id of cat_id
-#   # it's better use Cat.objects.get rather then .filter
-#   profile = Profile.objects.get(id=user_id)
-#   #find toys that cat doesn't have and exclude them
-#   # toys_cat_doesnt_have = Toy.objects.exclude(id__in = cat.toys.all().values_list('id'))
-#   skills_profile_doesnt_have = Skill.objects.exlude(id__in = profile.skills.all().values_list('id'))
-#   feeding_form = FeedingForm() #we need to instintate our form FeedingForm to inject (render) our template
-#   return render(request, 'cats/detail.html', { 
-#     'cat': cat, 'feeding_form': feeding_form,
-#     # Add the toys to be displayed
-#     'toys': toys_cat_doesnt_have
-#      })
-
 
 def assoc_skill(request, profile_id, skill_id):
   print('*****Checkpoint 2')
@@ -219,7 +173,7 @@ def add_photo(request, jobpost_id):
 
       # generate url string to save in our db
       url = f"{S3_BASE_URL}{BUCKET}/{key}"
-      # Create Photo we can assign to cat_id or cat (if you have a cat object)
+      # Create Photo we can assign to jobpost_id or jobpost (if you have a jobpost object)
       Photo.objects.create(url=url, jobpost_id=jobpost_id)
     except:
       print('An error occurred uploading file to S3')
