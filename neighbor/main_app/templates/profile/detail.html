@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>hey, this is my profile page! </h1>
+<h1>{{ user.username }}'s profile page! </h1>
+<a href="{% url 'profile_update' user.id %}" class="btn">Edit Profile</a>
 
 <hr>
 <div class="row">
   <div class="col s6"> 
+    <h3>{{ profile.name }}'s Bio:</h3>
+    <h4>{{ profile.bio }}</h4>
+    <h4>Zip code: {{ profile.zipcode }}</h4>
     <h3>{{ profile.name }}'s skills</h3>
     {% if profile.skills.count %}
       {% for skill in profile.skills.all %}
@@ -21,6 +25,5 @@
       <h5>No skills :(</h5>
     {% endif %}
   </div>
- 
 {% endblock %} 
 

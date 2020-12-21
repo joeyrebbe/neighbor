@@ -1,16 +1,14 @@
 from django.db import models
 import datetime
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 from django.urls import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # might need: from localflavor.models import USStateField
 
 # Create your models here.
 
-# class CustomUser(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     zip_code = models.CharField(max_length = 5) # if not working, try pip install django-localflavor
-    # if pip install, change params to (_("zip code"), max_length=5, default=43701)
 class JobPost(models.Model):
     name = models.CharField(max_length = 100)
     description = models.TextField(max_length = 250)
@@ -43,24 +41,27 @@ class Skill(models.Model):
             
     def __str__(self):
         return self.name
-    
-class ZipCode(models.Model):
-    zipcode = models.CharField(max_length=5)
-
-    def __str__(self):
-        return self.zipcode
 
 class Profile(models.Model):
+  user = models.OneToOneField(User, on_delete=models.CASCADE)
   name = models.CharField(max_length=50)
+  bio = models.CharField(max_length=255, default='Enter your bio here!')
   skills = models.ManyToManyField(Skill)
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
-  zipcode = models.ManyToManyField(ZipCode)
-  
+  zipcode = models.CharField(max_length=5, default=12345)
+
   def __str__(self):
       return self.name
 
   def get_absolute_url(self):
       return reverse('profile_detail', kwargs={'profile_id': self.id})
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 class JobApplicationMap(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
