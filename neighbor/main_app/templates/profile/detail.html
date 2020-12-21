@@ -1,27 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ user.username }}'s profile page! </h1>
-<a href="{% url 'profile_update' user.id %}" class="btn">Edit Profile</a>
-
-<hr>
+<h1>{{ profile.name }}'s profile page! </h1>
 <div class="row">
   <div class="col s6"> 
     <h3>{{ profile.name }}'s Bio:</h3>
     <h4>{{ profile.bio }}</h4>
     <h4>Zip code: {{ profile.zipcode }}</h4>
-    <h3>{{ profile.name }}'s skills</h3>
   </div>
 
   <div class="col s6">
-    <form action="{% url 'add_skill' user.id %}" method="post">
-      {% csrf_token %}
-      {{ skill_form.as_p }}
-      <input type="submit" class="btn" value="Add Skill">
-    </form>
+    <table class="striped">
+      <h3>{{ profile.name }}'s skills</h3>
+      <thead>
+        <tr><th>Skills</th></tr>
+      </thead>
+      <tbody>
+        {% for skill in profile.skill_set.all %}
+          <tr>
+            <td>{{skill.get_skill_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
+<<<<<<< HEAD
 <!-- dont forget this part below for rendering skills -->
+=======
+<a href="{% url 'profile_update' user.id %}" class="btn">Edit Profile</a>
+
+<form action="{% url 'add_skill' user.id %}" method="post">
+  {% csrf_token %}
+  {{ skill_form.as_p }}
+  <input type="submit" class="btn" value="Add Skill">
+</form>
+
+>>>>>>> main
 <script>
   var selectEl = document.getElementById('id_skill');
   M.FormSelect.init(selectEl);
