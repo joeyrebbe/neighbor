@@ -62,7 +62,7 @@ def about(request):
 
 class JobPostUpdate(LoginRequiredMixin, UpdateView): 
   model = JobPost
-  fields = ['description', 'date', 'maxPeople', 'compensation'] 
+  fields = ['description', 'date', 'maxPeople', 'compensation', 'zipcode'] 
 
 class JobPostDelete(LoginRequiredMixin, DeleteView):
   model = JobPost
@@ -71,7 +71,7 @@ class JobPostDelete(LoginRequiredMixin, DeleteView):
 
 class JobPostCreate(LoginRequiredMixin, CreateView):
   model = JobPost
-  fields = ['name', 'description', 'date', 'maxPeople', 'compensation']
+  fields = ['name', 'description', 'date', 'maxPeople', 'compensation', 'zipcode']
 
   def form_valid(self, form):
     # Assign the logged in user (self.request.user)
@@ -86,7 +86,11 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 def profile(request, profile_id):
   profile = Profile.objects.get(id=profile_id)
   # skills = Skill.objects.filter(user=request.user)
-  return render(request, 'profile/detail.html', {'profile': profile})
+  print(profile.skill_set)
+  skill_form = SkillForm()
+  return render(request, 'profile/detail.html', {
+    'profile': profile, 'skill_form': skill_form
+    })
 
 # def assoc_skill(request, profile_id, skill_id):
 
