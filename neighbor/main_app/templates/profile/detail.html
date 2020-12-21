@@ -25,6 +25,7 @@
     </table>
   </div>
 </div>
+
 <a href="{% url 'profile_update' user.id %}" class="btn">Edit Profile</a>
 
 <form action="{% url 'add_skill' user.id %}" method="post">
@@ -37,5 +38,8 @@
   var selectEl = document.getElementById('id_skill');
   M.FormSelect.init(selectEl);
 </script>
+
+<!-- dont forget this part below for rendering skills -->
+<!-- TEST TEST TEST -->
 {% endblock %} 
 
