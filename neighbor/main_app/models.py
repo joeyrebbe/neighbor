@@ -67,6 +67,8 @@ class JobApplicationMap(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     jobPost = models.ForeignKey(JobPost, on_delete=models.CASCADE)
 
+    jobPost = models.ForeignKey(JobPost, on_delete=models.CASCADE)
+
     
     def __str__(self):
         return f"user_id: {self.user_id}; jobPost_id: {self.jobPost_id}" 
@@ -78,11 +80,3 @@ class JobApplicationMap(models.Model):
                 name='useri_id_job_post_id_unique',
             ),
         ]
-
-class Skill(models.Model):
-    value = models.CharField(max_length = 100)
-    description = models.TextField(max_length = 250)
-       
-    def __str__(self):
-        return self.value
-
