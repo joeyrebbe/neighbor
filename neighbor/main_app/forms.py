@@ -4,7 +4,7 @@ from django.forms import ModelForm
 class SearchingForm(forms.ModelForm):
   class Meta:
     model = JobPost
-    fields = ['name']
+    fields = ['name', 'zipcode']
 
 class SkillForm(ModelForm):
 
