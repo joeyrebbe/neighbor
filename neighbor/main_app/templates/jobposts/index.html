@@ -7,7 +7,7 @@
 <h5>Search for a request:</h5>
 <form method='POST' action=''>{% csrf_token %}
     {{form|crispy}}
-    <input type="submit" value='Search'/>
+    <button type="submit" class="btn-floating btn-large"><i class="material-icons">search</i></button>
 </form>
 <br>
 
@@ -25,7 +25,7 @@
     <tbody>
         {% for jobpost in jobposts %}
         <tr>
-            <td><a href="{% url 'detail' jobpost.id %}" class="teal-text">{{ jobpost.name }}</a></td>
+            <td><a href="{% url 'detail' jobpost.id %}" class="teal-text"><u>{{ jobpost.name }}</u></a></td>
             <td>{{ jobpost.compensation }}</td>
             <td>{{ jobpost.date }}</td>
             <td class="center">{{ jobpost.maxPeople }} </td>

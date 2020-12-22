@@ -2,7 +2,7 @@
 
 {% block content %}
   {% if object %}
-    <h1>Editing profile for <span class="teal-text">{{object.name}}</span></h1>
+    <h1>Profile Edit:</h1>
   {% else %}
     <h1>Create Profile</h1>
   {% endif %}
@@ -14,7 +14,7 @@
       <!-- Render the inputs inside of <tr>s & <td>s -->
       {{ form.as_table }}
     </table>
-    <input type="submit" value="Submit!" class="btn">
+    <button type="submit" class="btn-floating btn-large grey darken-2"><i class="material-icons" style="font-size:35px">save</i></button>
   </form>
 
 {% endblock %}
