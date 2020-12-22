@@ -7,31 +7,31 @@ from django.dispatch import receiver
 
 
 SKILLS = (
-    ('C', 'Cleaning'), 
-    ('G', 'Gardening'),
-    ('E', 'Electrical'),
-    ('B', 'Babysitting'),
-    ('P', 'Pest Control'),
-    ('D', 'DJing'),
-    ('L', 'General Labor'),
-    ('H', 'Handyperson'),
-    ('S', 'Computer Skills')
-    # ('10', 'Auto Mechanic'),
-    # ('11', 'Carpentry'),
-    # ('12', 'Power Tools'),
-    # ('13', 'Organizer'),
-    # ('14', 'Music Teaching'),
-    # ('15', 'Animal Handling'),
-    # ('16', 'Photography'),
-    # ('17', 'Writing'),
-    # ('18', 'Art'),
-    # ('19', 'Doomsday Prepping'),
-    # ('20', 'Cooking'),
-    # ('21', 'Sewing'),
-    # ('22', 'Plumbing'),
-    # ('23', 'Welding'),
-    # ('24', 'Quantum Physics'),
-    # ('25', 'Intimidation')
+    ('1', 'Cleaning'), 
+    ('2', 'Gardening'),
+    ('3', 'Electrical'),
+    ('4', 'Babysitting'),
+    ('5', 'Pest Control'),
+    ('6', 'DJing'),
+    ('7', 'General Labor'),
+    ('8', 'Handyperson'),
+    ('9', 'Computer Skills'),
+    ('10', 'Auto Mechanic'),
+    ('11', 'Carpentry'),
+    ('12', 'Power Tools'),
+    ('13', 'Organizer'),
+    ('14', 'Music Teaching'),
+    ('15', 'Animal Handling'),
+    ('16', 'Photography'),
+    ('17', 'Writing'),
+    ('18', 'Art'),
+    ('19', 'Doomsday Prepping'),
+    ('20', 'Cooking'),
+    ('21', 'Sewing'),
+    ('22', 'Plumbing'),
+    ('23', 'Welding'),
+    ('24', 'Quantum Physics'),
+    ('25', 'Intimidation')
 )
 
 class JobPost(models.Model):
@@ -83,7 +83,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Skill(models.Model):
     skill = models.CharField(
-        max_length=1,
+        max_length=2,
         choices=SKILLS,
         default=SKILLS[0][0]
     )  
