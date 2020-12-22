@@ -142,7 +142,7 @@ def job_application_create(request):
     return redirect('index')
   except Exception as err:
     print(err)
-    return HttpResponse(err, status=500)
+    return render(request, 'jobposts/applied.html')
 
   
 
