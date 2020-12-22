@@ -1,19 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ profile.name }}'s profile page! </h1>
+<h1>{{ profile.name }}'s profile </h1>
 <div class="row">
-  <div class="col s6"> 
-    <h3>{{ profile.name }}'s Bio:</h3>
+  <div class="col s5"> 
+    <h3>{{ profile.name }}'s Bio <a href="{% url 'profile_update' user.id %}" class="btn-floating"><i class="material-icons green">edit</i></a>
+    </h3>
     <h4>{{ profile.bio }}</h4>
     <h4>Zip code: {{ profile.zipcode }}</h4>
   </div>
 
   <div class="col s6">
+    <div class="row">
+      <div class="col s7">
     <table class="striped">
-      <h3>{{ profile.name }}'s skills</h3>
       <thead>
-        <tr><th>Skills</th></tr>
+        <br>
+        <tr><th style="font-size:30px">Skills</th></tr>
       </thead>
       <tbody>
         {% for skill in profile.skill_set.all %}
@@ -23,15 +26,19 @@
         {% endfor %}
       </tbody>
     </table>
+    </div>
+    <div class="col s5">
+      <br>
+      <h5>Add new skills:</h5>
+      <form action="{% url 'add_skill' user.id %}" method="post">
+        {% csrf_token %}
+        {{ skill_form.as_p }}
+        <button type="submit" class="btn-floating grey darken-2"><i class="material-icons" style="font-size:35px">add</i></button>
+      </form>
+    </div>
+    </div>
   </div>
 </div>
-<a href="{% url 'profile_update' user.id %}" class="btn">Edit Profile</a>
-
-<form action="{% url 'add_skill' user.id %}" method="post">
-  {% csrf_token %}
-  {{ skill_form.as_p }}
-  <input type="submit" class="btn" value="Add Skill">
-</form>
 
 <script>
   var selectEl = document.getElementById('id_skill');
