@@ -28,31 +28,31 @@ Members can upload photos to their job posts and all users can see who has appli
 
 ### Home Page
 
-
+<img src="https://i.imgur.com/hJWWkV7.png" width="300">
 
 ### Signup
 
-
+<img src="https://i.imgur.com/3fv8Nme.png" width = "300">
 
 ### Navigation Bar
 
-
+<img src="https://i.imgur.com/zIxa4yn.png" width = "300">
 
 ### Volunteer Job Post Feed
 
-
+<img src="https://i.imgur.com/apzPMFr.png" width = "300">
 
 ### Post Detail Page
 
-
+<img src="https://i.imgur.com/CCzxkMC.png" width="300">
 
 ### User Profile Page
 
-
+<img src="https://i.imgur.com/5iRwX6E.png" width="300">
 
 ### Adding a Skill To User Profile
 
-
+<img src="https://i.imgur.com/xW7xDv6.png" width="300">
 
 ## Technologies Used:
 
